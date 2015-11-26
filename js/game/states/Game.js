@@ -7,6 +7,7 @@ sa.Game.prototype = {
     create: function () {
 
         this.waveNumber = 1000;
+        this.playerAlpha = 1;
 
         this.game.time.events.repeat(Phaser.Timer.SECOND, this.waveNumber, this.waveGenerator, this);
 
@@ -43,6 +44,8 @@ sa.Game.prototype = {
             this.player.body.velocity.setTo(0, 0);
         }
 
+        this.game.physics.arcade.collide(this.player, this.squares, this.sHit, null, this);
+
 
     },
     shutdown: function () {
@@ -73,6 +76,15 @@ sa.Game.prototype = {
 
 
         this.waveNumber -= 1;
+    },
+    sHit: function (player, square) {
+        this.playerAlpha -= 0.1;
+        player.alpha = this.playerAlpha;
+        square.destroy();
+
+
+
+
     }
 
 };
