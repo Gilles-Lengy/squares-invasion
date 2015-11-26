@@ -177,7 +177,7 @@ squaresinvasion.Game.prototype = {
                 break;
             default :
                 bonusX = 0;
-                squareY = 0;
+                bonusY = 0;
         }
 
         var b = this.bonus.create(bonusX, bonusY, 'square');
@@ -195,15 +195,18 @@ squaresinvasion.Game.prototype = {
 
         this.hitAlphaSquareSound.play();
 
+
+
+
         this.playerAlpha -= 0.1;
-        this.playerAlpha = this.playerAlpha.toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug !
-        player.alpha = this.playerAlpha;
+        this.playerAlpha = this.playerAlpha.toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug ! // Utiliser dans playersFlashes -> playerOriginalTint
+        this.playerFlashes();
+
         square.destroy();
         if (this.playerAlpha == 0) {
             this.onEndGame.play();
             this.state.start('GameOver');
         }
-
 
 
     },
@@ -227,6 +230,16 @@ squaresinvasion.Game.prototype = {
         this.recordBestScore();
 
     },
+    playerFlashes: function () {
+        this.player.alpha = 0.99;
+        this.player.tint = 0xff0000;
+        this.game.time.events.add(111, this.playerOriginalTint, this);
+    },
+    playerOriginalTint: function () {
+        this.player.alpha = this.playerAlpha;
+        this.player.tint = 0x00000;
+    },
+
     recordBestScore: function () {
         // Stock score and best score
         if (!!localStorage) {
