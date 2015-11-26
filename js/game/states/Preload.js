@@ -19,6 +19,11 @@ squaresinvasion.Preload.prototype = {
         // Audio
         this.load.audio('onStartGame', ['assets/sounds/on-start-game.ogg', 'assets/on-start-game.mp3']);
         this.load.audio('onEndGame', ['assets/sounds/on-end-game.ogg', 'assets/on-end-game.mp3']);
+        this.load.audio('onTimer1', ['assets/sounds/on-timer-1.ogg', 'assets/on-timer-1.mp3']);
+        this.load.audio('hitAlphaSquare', ['assets/sounds/on-click-1.ogg', 'assets/on-click-1.mp3']);
+        this.load.audio('hitBlackSquare', ['assets/sounds/on-hit-black-square.ogg', 'assets/on-hit-black-square.mp3']);
+
+
 
         this.load.onLoadComplete.add(this.onLoadComplete, this);
 

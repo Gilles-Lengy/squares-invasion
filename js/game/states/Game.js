@@ -13,6 +13,12 @@ squaresinvasion.Game.prototype = {
         this.scoreString = "Score : ";
         this.score = 0;
 
+        // Sounds
+        this.onTimer1 = this.add.audio('onTimer1');
+        this.hitAlphaSquareSound = this.game.add.audio('hitAlphaSquare');
+        this.hitBlackSquareSound = this.game.add.audio('hitBlackSquare');
+        this.onEndGame = this.add.audio('onEndGame');
+
         // Local storage
         // Best score
         if (!!localStorage) {
@@ -128,6 +134,8 @@ squaresinvasion.Game.prototype = {
     },
     waveGenerator: function () {
 
+        this.onTimer1.play();
+
         this.alphaSquareGenerator('top');
         this.alphaSquareGenerator('right');
         this.alphaSquareGenerator('bottom');
@@ -185,16 +193,24 @@ squaresinvasion.Game.prototype = {
     },
     sHit: function (player, square) {
 
+        this.hitAlphaSquareSound.play();
+
         this.playerAlpha -= 0.1;
         this.playerAlpha = this.playerAlpha.toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug !
         player.alpha = this.playerAlpha;
         square.destroy();
         if (this.playerAlpha == 0) {
+            this.onEndGame.play();
             this.state.start('GameOver');
         }
 
+
+
     },
     bHit: function (player, bonus) {
+
+        this.hitBlackSquareSound.play();
+
         if (this.playerAlpha < 1) {
             this.playerAlpha = parseFloat(this.playerAlpha) + 0.1;// ParseFloat otherwise it's a string I guess...
 
