@@ -88,11 +88,20 @@ squaresinvasion.Game.prototype = {
         if (origin == 'top') {
             squareX = this.game.world.randomX;
             squareY = 0;
-        } else {
-            squareX = 0;
+        }
+        if (origin == 'right') {
+            squareX = this.game.world.width;
             squareY = this.game.world.randomY;
         }
 
+        if (origin == 'bottom') {
+            squareX = this.game.world.randomX;
+            squareY = this.game.world.height;
+        }
+        if (origin == 'left') {
+            squareX = 0;
+            squareY = this.game.world.randomY;
+        }
 
         var s = this.squares.create(squareX, squareY, 'square');
         s.anchor.setTo(0.5);
@@ -108,6 +117,8 @@ squaresinvasion.Game.prototype = {
 
         this.alphaSquareGenerator('top');
         this.alphaSquareGenerator('right');
+        this.alphaSquareGenerator('bottom');
+        this.alphaSquareGenerator('left');
 
         this.waveNumber -= 1;
         this.score += 1;
