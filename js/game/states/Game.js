@@ -7,6 +7,7 @@ squaresinvasion.Game.prototype = {
     create: function () {
 
         this.waveNumber = 1000;
+        this.bonusNumber = 500;
         this.playerAlpha = 1;
         this.scoreString = "Score : ";
         this.score = 0;
@@ -28,6 +29,8 @@ squaresinvasion.Game.prototype = {
 
         this.game.time.events.repeat(Phaser.Timer.SECOND, this.waveNumber, this.waveGenerator, this);
 
+        this.game.time.events.repeat(Phaser.Timer.SECOND * 2, this.bonusNumber, this.bonusGenerator, this);
+
 
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'square');
         this.player.anchor.setTo(0.5);
@@ -42,6 +45,9 @@ squaresinvasion.Game.prototype = {
 
         this.squares = this.game.add.group();
         this.squares.enableBody = true;
+
+        this.bonus = this.game.add.group();
+        this.bonus.enableBody = true;
 
 
     },
@@ -61,6 +67,7 @@ squaresinvasion.Game.prototype = {
 
         // To handle player and squares collision
         this.game.physics.arcade.collide(this.player, this.squares, this.sHit, null, this);
+        this.game.physics.arcade.collide(this.player, this.bonus, this.bHit, null, this);
 
 
     },
@@ -140,17 +147,78 @@ squaresinvasion.Game.prototype = {
 
 
     },
+    bonusGenerator: function () {
+
+        var bonusX, bonusY;
+
+        var randomBonusSide = this.game.rnd.integerInRange(0, 3);
+
+        if (randomBonusSide == 0) {
+            bonusX = this.game.world.randomX;
+            bonusY = 0;
+        }
+        if (randomBonusSide == 1) {
+            bonusX = this.game.world.width;
+            bonusY = this.game.world.randomY;
+        }
+
+        if (randomBonusSide == 2) {
+            bonusX = this.game.world.randomX;
+            bonusY = this.game.world.height;
+        }
+        if (randomBonusSide == 3) {
+            bonusX = 0;
+            bonusY = this.game.world.randomY;
+        }
+
+        var b = this.bonus.create(bonusX, bonusY, 'square');
+        b.anchor.setTo(0.5);
+        b.name = 'bonus' + this.waveNumber;
+        b.tint = 0x000000;
+        b.checkWorldBounds = true;
+        b.outOfBoundsKill = true;
+        b.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
+
+        this.bonusNumber -= 1;
+
+    },
     sHit: function (player, square) {
 
         this.playerAlpha -= 0.1;
         this.playerAlpha = this.playerAlpha.toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug !
-        console.log(this.playerAlpha);
         player.alpha = this.playerAlpha;
         square.destroy();
-        if(this.playerAlpha == 0){// This is because of a bug....
+        if (this.playerAlpha == 0) {
             this.state.start('GameOver');
         }
 
+    },
+    bHit: function (player, bonus) {
+        console.log('av: '+this.playerAlpha);
+        if (this.playerAlpha < 1) {
+            this.playerAlpha = parseFloat(this.playerAlpha)+ 0.1;// ParseFloat otherwise it's a string I guess...
+
+        }
+        console.log('ap: '+this.playerAlpha);
+        this.playerAlpha = parseFloat(this.playerAlpha).toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug !
+        player.alpha = this.playerAlpha;
+        bonus.destroy();
+        this.score += 10;
+
+        this.scoreText.text = this.scoreString + this.score;
+        this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
+
+        // Stock score and best score
+        if (!!localStorage) {
+            this.bestScoreStored = localStorage.getItem('bestScoreSquaresInvasion');
+            if (!this.bestScoreStored || this.bestScore < this.score) {
+                this.bestScore = this.score;
+                localStorage.setItem('bestScoreSquaresInvasion', this.bestScore);
+            }
+        } else {
+            // Fallback. LocalStorage isn't available
+            this.game.bestScore = 'N/A';
+        }
     }
 
 };
