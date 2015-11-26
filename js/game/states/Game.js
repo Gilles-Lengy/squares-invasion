@@ -140,16 +140,7 @@ squaresinvasion.Game.prototype = {
         this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
 
         // Stock score and best score
-        if (!!localStorage) {
-            this.bestScoreStored = localStorage.getItem('bestScoreSquaresInvasion');
-            if (!this.bestScoreStored || this.bestScore < this.score) {
-                this.bestScore = this.score;
-                localStorage.setItem('bestScoreSquaresInvasion', this.bestScore);
-            }
-        } else {
-            // Fallback. LocalStorage isn't available
-            this.game.bestScore = 'N/A';
-        }
+        this.recordBestScore();
 
 
     },
@@ -216,6 +207,11 @@ squaresinvasion.Game.prototype = {
         this.scoreText.text = this.scoreString + this.score;
         this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
 
+        // Stock score and best score
+        this.recordBestScore();
+
+    },
+    recordBestScore: function () {
         // Stock score and best score
         if (!!localStorage) {
             this.bestScoreStored = localStorage.getItem('bestScoreSquaresInvasion');
