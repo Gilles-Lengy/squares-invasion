@@ -65,14 +65,32 @@ squaresinvasion.Game.prototype = {
             squareY =  0;
 
 
-        var s = this.squares.create(squareX, squareY, 'square');
-        s.anchor.setTo(0.5);
-        s.name = 'square' + this.waveNumber;
-        s.tint = 0x000000;
-        s.alpha=0.3;
-        s.body.collideWorldBounds = true;
-        s.body.bounce.setTo(0.8, 0.8);
-        s.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
+        var sh = this.squares.create(squareX, squareY, 'square');
+        sh.anchor.setTo(0.5);
+        sh.name = 'square' + this.waveNumber;
+        sh.tint = 0x000000;
+        sh.alpha=0.3;
+        sh.body.collideWorldBounds = true;
+        sh.body.bounce.setTo(0.8, 0.8);
+        sh.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
+
+        squareX = 0;
+
+
+
+        squareY = this.game.world.randomY;
+
+
+
+
+        var sg = this.squares.create(squareX, squareY, 'square');
+        sg.anchor.setTo(0.5);
+        sg.name = 'square' + this.waveNumber;
+        sg.tint = 0x000000;
+        sg.alpha=0.3;
+        sg.body.collideWorldBounds = true;
+        sg.body.bounce.setTo(0.8, 0.8);
+        sg.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
 
 
         this.waveNumber -= 1;
