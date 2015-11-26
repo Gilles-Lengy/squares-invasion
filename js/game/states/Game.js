@@ -1,9 +1,9 @@
-sa.Game = function () {
+squaresinvasion.Game = function () {
 
 
 };
 
-sa.Game.prototype = {
+squaresinvasion.Game.prototype = {
     create: function () {
 
         this.waveNumber = 1000;

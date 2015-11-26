@@ -1,8 +1,8 @@
-sa.GameOver = function() {
+squaresinvasion.GameOver = function() {
 
 };
 
-sa.GameOver.prototype = {
+squaresinvasion.GameOver.prototype = {
     create: function() {
 
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'square');

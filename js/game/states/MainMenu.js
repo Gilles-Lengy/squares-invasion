@@ -1,6 +1,6 @@
-sa.MainMenu = function() {};
+squaresinvasion.MainMenu = function() {};
 
-sa.MainMenu.prototype = {
+squaresinvasion.MainMenu.prototype = {
     create: function() {
 
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'square');

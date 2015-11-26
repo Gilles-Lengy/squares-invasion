@@ -1,9 +1,9 @@
 
-var sa = function() {};
+var squaresinvasion = function() {};
 
-sa.Boot = function() {};
+squaresinvasion.Boot = function() {};
 
-sa.Boot.prototype = {
+squaresinvasion.Boot.prototype = {
 
     preload: function() {
         this.load.image('preloadbar', 'assets/images/preload-bar.png');

@@ -1,8 +1,8 @@
-sa.Preload = function() {
+squaresinvasion.Preload = function() {
     this.ready = false;
 };
 
-sa.Preload.prototype = {
+squaresinvasion.Preload.prototype = {
     preload: function() {
 
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'preloadbar');
