@@ -1,14 +1,15 @@
+var squaresinvasion = function () {
+};
 
-var squaresinvasion = function() {};
-
-squaresinvasion.Boot = function() {};
+squaresinvasion.Boot = function () {
+};
 
 squaresinvasion.Boot.prototype = {
 
-    preload: function() {
+    preload: function () {
         this.load.image('preloadbar', 'assets/images/preload-bar.png');
     },
-    create: function() {
+    create: function () {
         this.game.stage.backgroundColor = '#ccc';
 
         //  Unless you specifically know your game needs to support multi-touch I would recommend setting this to 1
@@ -19,7 +20,7 @@ squaresinvasion.Boot.prototype = {
             this.scale.pageAlignHorizontally = true;
         } else {
             //  Same goes for mobile settings.
-            //  In this case we're saying "scale the game, no lower than 480x260 and no higher than 1024x768"
+            //  In this case we're saying "scale the game, no lower than 568x600 and no higher than 2048x1536"
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.minWidth = 568;
             this.scale.minHeight = 600;

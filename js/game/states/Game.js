@@ -6,6 +6,7 @@ squaresinvasion.Game = function () {
 squaresinvasion.Game.prototype = {
     create: function () {
 
+        // Vars
         this.waveNumber = 1000;
         this.bonusNumber = 500;
         this.playerAlpha = 1;
@@ -21,31 +22,31 @@ squaresinvasion.Game.prototype = {
             this.bestScore = 'N/A';
         }
 
-
+        // Score text
         this.scoreText = this.game.add.bitmapText(10, 10, 'squareFont', this.scoreString + this.score, 88);
         this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
         this.scoreText.y = this.game.world.centerY - this.scoreText.textHeight / 2;
         this.scoreText.tint = 0xdedede;
 
+        // Repeating events
         this.game.time.events.repeat(Phaser.Timer.SECOND, this.waveNumber, this.waveGenerator, this);
-
         this.game.time.events.repeat(Phaser.Timer.SECOND * 2, this.bonusNumber, this.bonusGenerator, this);
 
-
+        // Player
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'square');
         this.player.anchor.setTo(0.5);
         this.player.scale.setTo(4);
         this.player.tint = 0x000000;
         this.player.smoothed = false;
-
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-
         this.game.physics.arcade.enableBody(this.player);
         this.player.body.collideWorldBounds = true;
 
+        // Alpha squares group
         this.squares = this.game.add.group();
         this.squares.enableBody = true;
 
+        // Bonus squares group
         this.bonus = this.game.add.group();
         this.bonus.enableBody = true;
 
@@ -65,8 +66,9 @@ squaresinvasion.Game.prototype = {
             this.player.body.velocity.setTo(0, 0);
         }
 
-        // To handle player and squares collision
+        // To handle player and alphasquare squares collision
         this.game.physics.arcade.collide(this.player, this.squares, this.sHit, null, this);
+        // To handle player and bonus squares collision
         this.game.physics.arcade.collide(this.player, this.bonus, this.bHit, null, this);
 
 
@@ -194,12 +196,10 @@ squaresinvasion.Game.prototype = {
 
     },
     bHit: function (player, bonus) {
-        console.log('av: '+this.playerAlpha);
         if (this.playerAlpha < 1) {
             this.playerAlpha = parseFloat(this.playerAlpha)+ 0.1;// ParseFloat otherwise it's a string I guess...
 
         }
-        console.log('ap: '+this.playerAlpha);
         this.playerAlpha = parseFloat(this.playerAlpha).toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug !
         player.alpha = this.playerAlpha;
         bonus.destroy();

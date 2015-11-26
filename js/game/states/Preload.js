@@ -1,18 +1,19 @@
-squaresinvasion.Preload = function() {
+squaresinvasion.Preload = function () {
     this.ready = false;
 };
 
 squaresinvasion.Preload.prototype = {
-    preload: function() {
+    preload: function () {
 
+        // Preload bar
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'preloadbar');
         this.preloadBar.anchor.setTo(0.5);
-
         this.load.setPreloadSprite(this.preloadBar);
 
+        // Images
         this.load.image('square', 'assets/images/white-square-20.png');
 
-
+        // Fonts
         this.load.bitmapFont('squareFont', 'assets/fonts/square8blackborder1/font.png', 'assets/fonts/square8blackborder1/font.fnt');
 
         // Audio
@@ -22,19 +23,19 @@ squaresinvasion.Preload.prototype = {
         this.load.onLoadComplete.add(this.onLoadComplete, this);
 
     },
-    create: function() {
+    create: function () {
 
         this.preloadBar.cropEnabled = false;
 
     },
-    update: function() {
-
-        if(this.ready === true) {
+    update: function () {
+        // Check if ready or not, Go to the Main menu when ready
+        if (this.ready === true) {
             this.state.start('MainMenu');
         }
 
     },
-    onLoadComplete: function() {
+    onLoadComplete: function () {
 
         this.ready = true;
 

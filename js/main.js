@@ -11,6 +11,6 @@ window.onload = function () {
     game.state.add('GameOver', squaresinvasion.GameOver);
     game.state.add('Preload', squaresinvasion.Preload);
 
-
+    // Boot
     game.state.start('Boot');
 };
