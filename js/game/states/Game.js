@@ -94,22 +94,26 @@ squaresinvasion.Game.prototype = {
 
         var squareX, squareY;
 
-        if (origin == 'top') {
-            squareX = this.game.world.randomX;
-            squareY = 0;
-        }
-        if (origin == 'right') {
-            squareX = this.game.world.width;
-            squareY = this.game.world.randomY;
-        }
-
-        if (origin == 'bottom') {
-            squareX = this.game.world.randomX;
-            squareY = this.game.world.height;
-        }
-        if (origin == 'left') {
-            squareX = 0;
-            squareY = this.game.world.randomY;
+        switch (origin) {
+            case 'top' :
+                squareX = this.game.world.randomX;
+                squareY = 0;
+                break;
+            case 'right':
+                squareX = this.game.world.width;
+                squareY = this.game.world.randomY;
+                break;
+            case 'bottom':
+                squareX = this.game.world.randomX;
+                squareY = this.game.world.height;
+                break;
+            case 'left':
+                squareX = 0;
+                squareY = this.game.world.randomY;
+                break;
+            default :
+                squareX = 0;
+                squareY = 0;
         }
 
         var s = this.squares.create(squareX, squareY, 'square');
@@ -155,22 +159,26 @@ squaresinvasion.Game.prototype = {
 
         var randomBonusSide = this.game.rnd.integerInRange(0, 3);
 
-        if (randomBonusSide == 0) {
-            bonusX = this.game.world.randomX;
-            bonusY = 0;
-        }
-        if (randomBonusSide == 1) {
-            bonusX = this.game.world.width;
-            bonusY = this.game.world.randomY;
-        }
-
-        if (randomBonusSide == 2) {
-            bonusX = this.game.world.randomX;
-            bonusY = this.game.world.height;
-        }
-        if (randomBonusSide == 3) {
-            bonusX = 0;
-            bonusY = this.game.world.randomY;
+        switch (randomBonusSide) {
+            case 0 :
+                bonusX = this.game.world.randomX;
+                bonusY = 0;
+                break;
+            case 1:
+                bonusX = this.game.world.width;
+                bonusY = this.game.world.randomY;
+                break;
+            case 2:
+                bonusX = this.game.world.randomX;
+                bonusY = this.game.world.height;
+                break;
+            case 3:
+                bonusX = 0;
+                bonusY = this.game.world.randomY;
+                break;
+            default :
+                bonusX = 0;
+                squareY = 0;
         }
 
         var b = this.bonus.create(bonusX, bonusY, 'square');
@@ -197,7 +205,7 @@ squaresinvasion.Game.prototype = {
     },
     bHit: function (player, bonus) {
         if (this.playerAlpha < 1) {
-            this.playerAlpha = parseFloat(this.playerAlpha)+ 0.1;// ParseFloat otherwise it's a string I guess...
+            this.playerAlpha = parseFloat(this.playerAlpha) + 0.1;// ParseFloat otherwise it's a string I guess...
 
         }
         this.playerAlpha = parseFloat(this.playerAlpha).toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug !
