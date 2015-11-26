@@ -13,7 +13,14 @@ squaresinvasion.GameOver.prototype = {
         this.player.inputEnabled = true;
         this.player.events.onInputDown.add(this.playGame, this);
 
+        this.gameBestScoreText = this.game.add.bitmapText(0,0, 'squareFont', 'Your best score : ' + this.game.bestScore, 88);
+        this.gameBestScoreText.x = this.game.world.centerX - this.gameBestScoreText.textWidth / 2;
+        this.gameBestScoreText.y = this.player.y - 250;
 
+        this.gameScoreText = this.game.add.bitmapText(0,0, 'squareFont', 'Your score : ' + this.game.score, 69);
+        this.gameScoreText.x = this.game.world.centerX - this.gameScoreText.textWidth / 2;
+        this.gameScoreText.y = this.player.y - 150;
+        this.gameScoreText.tint = 0xdddddd;
 
         this.gameStartText = this.game.add.bitmapText(0,0, 'squareFont', 'Click the black square and move it around to play !!!', 32);
         this.gameStartText.x = this.game.world.centerX - this.gameStartText.textWidth / 2;

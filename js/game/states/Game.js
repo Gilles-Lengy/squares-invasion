@@ -11,6 +11,15 @@ squaresinvasion.Game.prototype = {
         this.scoreString = "Score : ";
         this.score = 0;
 
+        // Local storage
+        // Best score
+        if (!!localStorage) {
+            this.bestScore = localStorage.getItem('bestScoreSquaresInvasion');
+        } else {
+            // Fallback. LocalStorage isn't available
+            this.bestScore = 'N/A';
+        }
+
 
         this.scoreText = this.game.add.bitmapText(10, 10, 'squareFont', this.scoreString + this.score, 88);
         this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
@@ -56,6 +65,16 @@ squaresinvasion.Game.prototype = {
 
     },
     shutdown: function () {
+        this.player.destroy();
+        this.squares.destroy();
+
+        this.scoreText.destroy();
+
+
+        this.game.score = this.score;
+        this.score = 0;
+
+        this.game.bestScore = this.bestScore;
 
 
     },
@@ -96,12 +115,30 @@ squaresinvasion.Game.prototype = {
         this.scoreText.text = this.scoreString + this.score;
         this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
 
+        // Stock score and best score
+        if (!!localStorage) {
+            this.bestScoreStored = localStorage.getItem('bestScoreSquaresInvasion');
+            if (!this.bestScoreStored || this.bestScore < this.score) {
+                this.bestScore = this.score;
+                localStorage.setItem('bestScoreSquaresInvasion', this.bestScore);
+            }
+        } else {
+            // Fallback. LocalStorage isn't available
+            this.game.bestScore = 'N/A';
+        }
+
+
     },
     sHit: function (player, square) {
 
         this.playerAlpha -= 0.1;
+        this.playerAlpha = this.playerAlpha.toFixed(1);// Pour avoir unseul chiffre après la virgule, sinon bug !
+        console.log(this.playerAlpha);
         player.alpha = this.playerAlpha;
         square.destroy();
+        if(this.playerAlpha == 0){// This is because of a bug....
+            this.state.start('GameOver');
+        }
 
     }
 
