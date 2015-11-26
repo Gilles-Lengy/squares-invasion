@@ -27,9 +27,6 @@ squaresinvasion.Game.prototype = {
         this.squares.enableBody = true;
 
 
-
-
-
     },
     update: function () {
         //  only move when you click
@@ -55,53 +52,42 @@ squaresinvasion.Game.prototype = {
     /******************************
      * THE GAME'S FUNCTIONS
      *******************************/
-    waveGenerator: function () {
+    alphaSquareGenerator: function (origin) {
+
         var squareX, squareY;
 
-        squareX = this.game.world.randomX;
+        if (origin == 'top') {
+            squareX = this.game.world.randomX;
+            squareY = 0;
+        } else {
+            squareX = 0;
+            squareY = this.game.world.randomY;
+        }
 
 
+        var s = this.squares.create(squareX, squareY, 'square');
+        s.anchor.setTo(0.5);
+        s.name = 'square' + this.waveNumber;
+        s.tint = 0x000000;
+        s.alpha = 0.3;
+        s.body.collideWorldBounds = true;
+        s.body.bounce.setTo(0.8, 0.8);
+        s.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
 
-            squareY =  0;
+    },
+    waveGenerator: function () {
 
-
-        var sh = this.squares.create(squareX, squareY, 'square');
-        sh.anchor.setTo(0.5);
-        sh.name = 'square' + this.waveNumber;
-        sh.tint = 0x000000;
-        sh.alpha=0.3;
-        sh.body.collideWorldBounds = true;
-        sh.body.bounce.setTo(0.8, 0.8);
-        sh.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
-
-        squareX = 0;
-
-
-
-        squareY = this.game.world.randomY;
-
-
-
-
-        var sg = this.squares.create(squareX, squareY, 'square');
-        sg.anchor.setTo(0.5);
-        sg.name = 'square' + this.waveNumber;
-        sg.tint = 0x000000;
-        sg.alpha=0.3;
-        sg.body.collideWorldBounds = true;
-        sg.body.bounce.setTo(0.8, 0.8);
-        sg.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
-
+        this.alphaSquareGenerator('top');
+        this.alphaSquareGenerator('right');
 
         this.waveNumber -= 1;
+
     },
     sHit: function (player, square) {
+
         this.playerAlpha -= 0.1;
         player.alpha = this.playerAlpha;
         square.destroy();
-
-
-
 
     }
 
