@@ -8,6 +8,14 @@ squaresinvasion.Game.prototype = {
 
         this.waveNumber = 1000;
         this.playerAlpha = 1;
+        this.scoreString = "Score : ";
+        this.score = 0;
+
+
+        this.scoreText = this.game.add.bitmapText(10, 10, 'squareFont', this.scoreString + this.score, 88);
+        this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
+        this.scoreText.y = this.game.world.centerY - this.scoreText.textHeight / 2;
+        this.scoreText.tint = 0xdedede;
 
         this.game.time.events.repeat(Phaser.Timer.SECOND, this.waveNumber, this.waveGenerator, this);
 
@@ -29,6 +37,7 @@ squaresinvasion.Game.prototype = {
 
     },
     update: function () {
+
         //  only move when you click
         if (this.game.input.mousePointer.isDown) {
             if (Phaser.Rectangle.contains(this.player.body, this.game.input.x, this.game.input.y))
@@ -41,6 +50,7 @@ squaresinvasion.Game.prototype = {
             this.player.body.velocity.setTo(0, 0);
         }
 
+        // To handle player and squares collision
         this.game.physics.arcade.collide(this.player, this.squares, this.sHit, null, this);
 
 
@@ -81,6 +91,10 @@ squaresinvasion.Game.prototype = {
         this.alphaSquareGenerator('right');
 
         this.waveNumber -= 1;
+        this.score += 1;
+
+        this.scoreText.text = this.scoreString + this.score;
+        this.scoreText.x = this.game.world.centerX - this.scoreText.textWidth / 2;
 
     },
     sHit: function (player, square) {
