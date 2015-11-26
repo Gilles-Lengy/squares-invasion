@@ -6,6 +6,10 @@ sa.Game = function () {
 sa.Game.prototype = {
     create: function () {
 
+        this.waveNumber = 1000;
+
+        this.game.time.events.repeat(Phaser.Timer.SECOND, this.waveNumber, this.waveGenerator, this);
+
 
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'square');
         this.player.anchor.setTo(0.5);
@@ -17,6 +21,12 @@ sa.Game.prototype = {
 
         this.game.physics.arcade.enableBody(this.player);
         this.player.body.collideWorldBounds = true;
+
+        this.squares = this.game.add.group();
+        this.squares.enableBody = true;
+
+
+
 
 
     },
@@ -38,10 +48,31 @@ sa.Game.prototype = {
     shutdown: function () {
 
 
-    }
+    },
     /******************************
      * THE GAME'S FUNCTIONS
      *******************************/
+    waveGenerator: function () {
+        var squareX, squareY;
 
+        squareX = this.game.world.randomX;
+
+
+
+            squareY =  0;
+
+
+        var s = this.squares.create(squareX, squareY, 'square');
+        s.anchor.setTo(0.5);
+        s.name = 'square' + this.waveNumber;
+        s.tint = 0x000000;
+        s.alpha=0.3;
+        s.body.collideWorldBounds = true;
+        s.body.bounce.setTo(0.8, 0.8);
+        s.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
+
+
+        this.waveNumber -= 1;
+    }
 
 };
