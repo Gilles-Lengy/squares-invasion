@@ -1,12 +1,10 @@
 sa.Game = function () {
 
 
-
 };
 
 sa.Game.prototype = {
     create: function () {
-
 
 
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'square');
@@ -21,20 +19,23 @@ sa.Game.prototype = {
         this.player.body.collideWorldBounds = true;
 
 
-
-
-
     },
     update: function () {
-
-
+        //  only move when you click
+        if (this.game.input.mousePointer.isDown) {
+            if (Phaser.Rectangle.contains(this.player.body, this.game.input.x, this.game.input.y))
+                this.player.body.velocity.setTo(0, 0);
+            else {
+                this.game.physics.arcade.moveToPointer(this.player, 400);
+            }
+        }
+        else {
+            this.player.body.velocity.setTo(0, 0);
+        }
 
 
     },
     shutdown: function () {
-
-
-
 
 
     }
