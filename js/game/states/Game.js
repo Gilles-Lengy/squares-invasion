@@ -62,11 +62,7 @@ squaresinvasion.Game.prototype = {
 
         //  only move when you click
         if (this.game.input.mousePointer.isDown) {
-            if (Phaser.Rectangle.contains(this.player.body, this.game.input.x, this.game.input.y))
-                this.player.body.velocity.setTo(0, 0);
-            else {
-                this.game.physics.arcade.moveToPointer(this.player, 400);
-            }
+            this.game.physics.arcade.moveToPointer(this.player, 345, this.game.input.activePointer, 120);
         }
         else {
             this.player.body.velocity.setTo(0, 0);
@@ -194,8 +190,6 @@ squaresinvasion.Game.prototype = {
     sHit: function (player, square) {
 
         this.hitAlphaSquareSound.play();
-
-
 
 
         this.playerAlpha -= 0.1;
