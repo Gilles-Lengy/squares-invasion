@@ -94,28 +94,40 @@ squaresinvasion.Game.prototype = {
      *******************************/
     alphaSquareGenerator: function (origin) {
 
-        var squareX, squareY;
+        var squareX, squareY, vX, vY;
+
+        var randomBonusDirection = this.game.rnd.integerInRange(0, 1);
 
         switch (origin) {
             case 'top' :
                 squareX = this.game.world.randomX;
                 squareY = 0;
+                vX = this.vxvy(randomBonusDirection);
+                vY = this.vxvy(0);
                 break;
             case 'right':
                 squareX = this.game.world.width;
                 squareY = this.game.world.randomY;
+                vX = this.vxvy(1);
+                vY = this.vxvy(randomBonusDirection);
                 break;
             case 'bottom':
                 squareX = this.game.world.randomX;
                 squareY = this.game.world.height;
+                vX = this.vxvy(randomBonusDirection);
+                vY = this.vxvy(1);
                 break;
             case 'left':
                 squareX = 0;
                 squareY = this.game.world.randomY;
+                vX = this.vxvy(0);
+                vY = this.vxvy(randomBonusDirection);
                 break;
             default :
                 squareX = 0;
                 squareY = 0;
+                vX = this.vxvy(0);
+                vY = this.vxvy(0);
         }
 
         var s = this.squares.create(squareX, squareY, 'square');
@@ -125,17 +137,19 @@ squaresinvasion.Game.prototype = {
         s.alpha = 0.3;
         s.body.collideWorldBounds = true;
         s.body.bounce.setTo(0.8, 0.8);
-        s.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
+        s.body.velocity.setTo(vX, vY);
 
     },
     waveGenerator: function () {
 
         this.onTimer1.play();
 
+
         this.alphaSquareGenerator('top');
         this.alphaSquareGenerator('right');
         this.alphaSquareGenerator('bottom');
         this.alphaSquareGenerator('left');
+
 
         this.waveNumber -= 1;
         this.score += 1;
@@ -150,30 +164,43 @@ squaresinvasion.Game.prototype = {
     },
     bonusGenerator: function () {
 
-        var bonusX, bonusY;
+        var bonusX, bonusY, vX, vY;
 
-        var randomBonusSide = this.game.rnd.integerInRange(0, 3);
+        var randomBonusSide = 3;//this.game.rnd.integerInRange(0, 3);
+
+        var randomBonusDirection = this.game.rnd.integerInRange(0, 1);
+
 
         switch (randomBonusSide) {
             case 0 :
                 bonusX = this.game.world.randomX;
                 bonusY = 0;
+                vX = this.vxvy(randomBonusDirection);
+                vY = this.vxvy(0);
                 break;
             case 1:
                 bonusX = this.game.world.width;
                 bonusY = this.game.world.randomY;
+                vX = this.vxvy(1);
+                vY = this.vxvy(randomBonusDirection);
                 break;
             case 2:
                 bonusX = this.game.world.randomX;
                 bonusY = this.game.world.height;
+                vX = this.vxvy(randomBonusDirection);
+                vY = this.vxvy(1);
                 break;
             case 3:
                 bonusX = 0;
                 bonusY = this.game.world.randomY;
+                vX = this.vxvy(0);
+                vY = this.vxvy(randomBonusDirection);
                 break;
             default :
                 bonusX = 0;
                 bonusY = 0;
+                vX = this.vxvy(0);
+                vY = this.vxvy(0);
         }
 
         var b = this.bonus.create(bonusX, bonusY, 'square');
@@ -182,9 +209,21 @@ squaresinvasion.Game.prototype = {
         b.tint = 0x000000;
         b.checkWorldBounds = true;
         b.outOfBoundsKill = true;
-        b.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
+        b.body.velocity.setTo(vX, vY);
 
         this.bonusNumber -= 1;
+
+    },
+    vxvy: function (direction) {
+        var v;
+
+        v = 20 + Math.random() * 60;
+
+        if (direction === 0) {
+            return v;
+        } else {
+            return -v;
+        }
 
     },
     sHit: function (player, square) {
