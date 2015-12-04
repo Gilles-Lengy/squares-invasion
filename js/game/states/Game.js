@@ -60,13 +60,9 @@ squaresinvasion.Game.prototype = {
     },
     update: function () {
 
-        //  only move when you click
-        if (this.game.input.mousePointer.isDown) {
-            this.game.physics.arcade.moveToPointer(this.player, 345, this.game.input.activePointer, 120);
-        }
-        else {
-            this.player.body.velocity.setTo(0, 0);
-        }
+        // Always follow the mouse
+        this.game.physics.arcade.moveToPointer(this.player, 345, this.game.input.activePointer, 120);
+
 
         // To handle player and alphasquare squares collision
         this.game.physics.arcade.collide(this.player, this.squares, this.sHit, null, this);
