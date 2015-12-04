@@ -36,7 +36,7 @@ squaresinvasion.Game.prototype = {
 
         // Repeating events
         this.game.time.events.repeat(Phaser.Timer.SECOND, this.waveNumber, this.waveGenerator, this);
-        this.game.time.events.repeat(Phaser.Timer.SECOND * 2, this.bonusNumber, this.bonusGenerator, this);
+        this.game.time.events.repeat(Phaser.Timer.SECOND, this.bonusNumber, this.bonusGenerator, this);
 
         // Player
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'square');
@@ -166,7 +166,7 @@ squaresinvasion.Game.prototype = {
 
         var bonusX, bonusY, vX, vY;
 
-        var randomBonusSide = 3;//this.game.rnd.integerInRange(0, 3);
+        var randomBonusSide = this.game.rnd.integerInRange(0, 3);
 
         var randomBonusDirection = this.game.rnd.integerInRange(0, 1);
 
