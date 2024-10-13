@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Squares Invasion, a microgame by Robomatix 1999</title>
-    <meta name="mobile-web-app-capable" content="yes">
+    <!--    <meta name="mobile-web-app-capable" content="yes">-->
     <meta name="viewport" content="minimal-ui">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="canonical" href="http://le-carre-noir.net/squares-invasion/" />
+    <link rel="canonical" href="http://le-carre-noir.net/squares-invasion/"/>
     <link rel="image_src"
           href="http://le-carre-noir.net/bouncing-the-black-squares/images/bouncing-the-black-squares-500.png"/>
     <!-- To choose the picture displayed in app such as G+ -->
@@ -27,15 +27,28 @@
     <meta name="description" content="Squares Invasion, a microgame by Robomatix 1999"/>
 
     <style>
-        body {
+        body, html {
             padding: 0;
             margin: 0;
-            background: #ccc;
+            height: 100%;
+            background: #777777;
+            position: relative;
+        }
+
+        canvas {
+            margin: auto;
+            border: solid #000 7px;
         }
     </style>
+
+
 </head>
 
 <body>
+
+<div id="app">
+    <div id="game-container"></div>
+</div>
 
 
 <!-- include the phaser library -->
